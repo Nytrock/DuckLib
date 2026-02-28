@@ -1,0 +1,3 @@
+displayName = DuckLib
+author = Nytrock
+version = 0.1

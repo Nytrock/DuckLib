@@ -1,0 +1,4 @@
+Conditions: {
+	SlimeRain: Slime rain is happening
+	NotSlimeRain: Slime rain is not happening
+}
