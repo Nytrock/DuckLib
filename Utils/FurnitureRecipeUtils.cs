@@ -2,7 +2,7 @@
 using Terraria.ID;
 
 namespace DuckLib.Utils {
-    public static class FurnitureUtils {
+    public static class FurnitureRecipeUtils {
         public static void AddSpecificFurniture(int block, int craftingStation = -1, int torch = ItemID.Torch,
             int bathtub = -1, int bed = -1, int bookcase = -1, int candelabra = -1,
             int candle = -1, int chair = -1, int chandelier = -1, int clock = -1, int door = -1,
