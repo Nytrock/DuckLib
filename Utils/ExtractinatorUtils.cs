@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DuckLib.Extensions;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

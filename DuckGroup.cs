@@ -1,5 +1,6 @@
-﻿using DuckLib.Utils;
+﻿using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace DuckLib {
@@ -14,13 +15,24 @@ namespace DuckLib {
         public static int AnyAdamantiteBar { get; private set; }
 
         public override void AddRecipeGroups() {
-            AnyCopperBar = RecipeUtils.CreateSimpleGroup(ItemID.CopperBar, ItemID.TinBar);
-            AnySilverBar = RecipeUtils.CreateSimpleGroup(ItemID.SilverBar, ItemID.TungstenBar);
-            AnyGoldBar = RecipeUtils.CreateSimpleGroup(ItemID.GoldBar, ItemID.PlatinumBar);
-            AnyEvilBar = RecipeUtils.CreateSimpleGroup(ItemID.DemoniteBar, ItemID.CrimtaneBar);
-            AnyCobaltBar = RecipeUtils.CreateSimpleGroup(ItemID.CobaltBar, ItemID.PalladiumBar);
-            AnyMythrilBar = RecipeUtils.CreateSimpleGroup(ItemID.MythrilBar, ItemID.OrichalcumBar);
-            AnyAdamantiteBar = RecipeUtils.CreateSimpleGroup(ItemID.AdamantiteBar, ItemID.TitaniumBar);
+            AnyCopperBar = CreateSimpleGroup(ItemID.CopperBar, ItemID.TinBar);
+            AnySilverBar = CreateSimpleGroup(ItemID.SilverBar, ItemID.TungstenBar);
+            AnyGoldBar = CreateSimpleGroup(ItemID.GoldBar, ItemID.PlatinumBar);
+            AnyEvilBar = CreateSimpleGroup(ItemID.DemoniteBar, ItemID.CrimtaneBar);
+            AnyCobaltBar = CreateSimpleGroup(ItemID.CobaltBar, ItemID.PalladiumBar);
+            AnyMythrilBar = CreateSimpleGroup(ItemID.MythrilBar, ItemID.OrichalcumBar);
+            AnyAdamantiteBar = CreateSimpleGroup(ItemID.AdamantiteBar, ItemID.TitaniumBar);
+        }
+
+        public static int CreateSimpleGroup(int mainItem, params int[] itemsInGroup) {
+            itemsInGroup = [mainItem, .. itemsInGroup];
+            string mainItemName = Lang.GetItemNameValue(mainItem);
+
+            RecipeGroup recipeGroup = new(
+                () => $"{Language.GetTextValue("LegacyMisc.37")} {mainItemName}",
+                itemsInGroup
+            );
+            return RecipeGroup.RegisterGroup("Any" + mainItemName.Replace(" ", ""), recipeGroup);
         }
     }
 }

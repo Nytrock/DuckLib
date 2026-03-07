@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 
-namespace DuckLib.Utils {
-    public static class ItemUtils {
+namespace DuckLib.Extensions {
+    public static class ItemExtension {
         public static bool IsType(this Item item, int[] types) {
             return types.Contains(item.type);
         }

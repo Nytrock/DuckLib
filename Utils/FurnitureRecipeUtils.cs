@@ -1,191 +1,217 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 
 namespace DuckLib.Utils {
     public static class FurnitureRecipeUtils {
-        public static void AddSpecificFurniture(int block, int craftingStation = -1, int torch = ItemID.Torch,
+        public static Dictionary<int, Recipe> AddSpecificFurniture(int block, int craftingStation = -1, int torch = ItemID.Torch,
             int bathtub = -1, int bed = -1, int bookcase = -1, int candelabra = -1,
             int candle = -1, int chair = -1, int chandelier = -1, int clock = -1, int door = -1,
             int dresser = -1, int lamp = -1, int piano = -1, int sofa = -1, int table = -1,
             int workbench = -1, int chest = -1, int sink = -1, int lantern = -1, int toilet = -1, int vase = -1) {
 
+            Dictionary<int, Recipe> result = [];
             if (bathtub != -1)
-                AddBathtub(bathtub, block, craftingStation);
+                result.Add(bathtub, AddBathtub(bathtub, block, craftingStation));
             if (bed != -1)
-                AddBed(bed, block, craftingStation);
+                result.Add(bed, AddBed(bed, block, craftingStation));
             if (bookcase != -1)
-                AddBookcase(bookcase, block, craftingStation);
+                result.Add(bookcase, AddBookcase(bookcase, block, craftingStation));
             if (candelabra != -1)
-                AddCandelabra(candelabra, block, craftingStation, torch);
+                result.Add(candelabra, AddCandelabra(candelabra, block, craftingStation, torch));
             if (candle != -1)
-                AddCandle(candle, block, craftingStation, torch);
+                result.Add(candle, AddCandle(candle, block, craftingStation, torch));
             if (chair != -1)
-                AddChair(chair, block, craftingStation);
+                result.Add(chair, AddChair(chair, block, craftingStation));
             if (chandelier != -1)
-                AddChandelier(chandelier, block, craftingStation, torch);
+                result.Add(chandelier, AddChandelier(chandelier, block, craftingStation, torch));
             if (clock != -1)
-                AddClock(clock, block, craftingStation);
+                result.Add(clock, AddClock(clock, block, craftingStation));
             if (door != -1)
-                AddDoor(door, block, craftingStation);
+                result.Add(door, AddDoor(door, block, craftingStation));
             if (dresser != -1)
-                AddDresser(dresser, block, craftingStation);
+                result.Add(dresser, AddDresser(dresser, block, craftingStation));
             if (lamp != -1)
-                AddLamp(lamp, block, craftingStation, torch);
+                result.Add(lamp, AddLamp(lamp, block, craftingStation, torch));
             if (piano != -1)
-                AddPiano(piano, block, craftingStation);
+                result.Add(piano, AddPiano(piano, block, craftingStation));
             if (sofa != -1)
-                AddSofa(sofa, block, craftingStation);
+                result.Add(sofa, AddSofa(sofa, block, craftingStation));
             if (table != -1)
-                AddTable(table, block, craftingStation);
+                result.Add(table, AddTable(table, block, craftingStation));
             if (workbench != -1)
-                AddWorkbench(workbench, block, craftingStation);
+                result.Add(workbench, AddWorkbench(workbench, block, craftingStation));
             if (chest != -1)
-                AddChest(chest, block, craftingStation);
+                result.Add(chest, AddChest(chest, block, craftingStation));
             if (sink != -1)
-                AddSink(sink, block, craftingStation);
+                result.Add(sink, AddSink(sink, block, craftingStation));
             if (toilet != -1)
-                AddToilet(toilet, block, craftingStation);
+                result.Add(toilet, AddToilet(toilet, block, craftingStation));
             if (lantern != -1)
-                AddLantern(lantern, block, craftingStation, torch);
+                result.Add(lantern, AddLantern(lantern, block, craftingStation, torch));
             if (vase != -1)
-                AddVase(vase, block, craftingStation);
+                result.Add(vase, AddVase(vase, block, craftingStation));
+
+            return result;
         }
 
-        public static void AddBathtub(int bathtub, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddBathtub(int bathtub, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(bathtub)
                 .AddIngredient(block, 14)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddBed(int bed, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddBed(int bed, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(bed)
                 .AddIngredient(block, 15)
                 .AddIngredient(ItemID.Silk, 5)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddBookcase(int bookcase, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddBookcase(int bookcase, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(bookcase)
                 .AddIngredient(block, 20)
                 .AddIngredient(ItemID.Book, 10)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddCandelabra(int candelabra, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
+        public static Recipe AddCandelabra(int candelabra, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(candelabra)
                 .AddIngredient(block, 5)
                 .AddIngredient(torch, 3)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddCandle(int candle, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
+        public static Recipe AddCandle(int candle, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(candle)
                 .AddIngredient(block, 4)
                 .AddIngredient(torch, 1)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddChair(int chair, int block, int craftingStation = TileID.WorkBenches) {
+        public static Recipe AddChair(int chair, int block, int craftingStation = TileID.WorkBenches) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(chair)
                 .AddIngredient(block, 4)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddChandelier(int chandelier, int block, int craftingStation = TileID.Anvils, int torch = ItemID.Torch) {
+        public static Recipe AddChandelier(int chandelier, int block, int craftingStation = TileID.Anvils, int torch = ItemID.Torch) {
             if (craftingStation == -1)
                 craftingStation = TileID.Anvils;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(chandelier)
                 .AddIngredient(block, 4)
                 .AddIngredient(torch, 4)
                 .AddIngredient(ItemID.Chain, 1)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddClock(int clock, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddClock(int clock, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                .Create(clock)
                .AddIngredient(block, 10)
                .AddIngredient(ItemID.Glass, 6)
                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
                .AddTile(craftingStation)
                .Register();
+
+            return recipe;
         }
 
-        public static void AddDoor(int door, int block, int craftingStation = TileID.WorkBenches) {
+        public static Recipe AddDoor(int door, int block, int craftingStation = TileID.WorkBenches) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(door)
                 .AddIngredient(block, 6)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddDresser(int dresser, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddDresser(int dresser, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(dresser)
                 .AddIngredient(block, 16)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddLamp(int lamp, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
+        public static Recipe AddLamp(int lamp, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(lamp)
                 .AddIngredient(block, 3)
                 .AddIngredient(torch, 1)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddPiano(int piano, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddPiano(int piano, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(piano)
                 .AddIngredient(block, 15)
                 .AddIngredient(ItemID.Book, 1)
@@ -193,32 +219,38 @@ namespace DuckLib.Utils {
                 .AddDecraftCondition(Condition.DownedSkeletron)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddSofa(int sofa, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddSofa(int sofa, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(sofa)
                 .AddIngredient(block, 5)
                 .AddIngredient(ItemID.Silk, 2)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddTable(int table, int block, int craftingStation = TileID.WorkBenches) {
+        public static Recipe AddTable(int table, int block, int craftingStation = TileID.WorkBenches) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(table)
                 .AddIngredient(block, 8)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddWorkbench(int workbench, int block, int craftingStation = -1) {
+        public static Recipe AddWorkbench(int workbench, int block, int craftingStation = -1) {
             Recipe recipe = Recipe
                 .Create(workbench)
                 .AddIngredient(block, 10);
@@ -227,64 +259,76 @@ namespace DuckLib.Utils {
                 recipe.AddTile(craftingStation);
 
             recipe.Register();
+
+            return recipe;
         }
 
-        public static void AddChest(int chest, int block, int craftingStation = TileID.WorkBenches) {
+        public static Recipe AddChest(int chest, int block, int craftingStation = TileID.WorkBenches) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(chest)
                 .AddIngredient(block, 8)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 2)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddToilet(int toilet, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddToilet(int toilet, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(toilet)
                 .AddIngredient(block, 6)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddSink(int sink, int block, int craftingStation = TileID.WorkBenches) {
+        public static Recipe AddSink(int sink, int block, int craftingStation = TileID.WorkBenches) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(sink)
                 .AddIngredient(block, 6)
                 .AddIngredient(ItemID.WaterBucket, 1)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddLantern(int sink, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
+        public static Recipe AddLantern(int sink, int block, int craftingStation = TileID.WorkBenches, int torch = ItemID.Torch) {
             if (craftingStation == -1)
                 craftingStation = TileID.WorkBenches;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(sink)
                 .AddIngredient(block, 6)
                 .AddIngredient(torch, 1)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
 
-        public static void AddVase(int vase, int block, int craftingStation = TileID.Sawmill) {
+        public static Recipe AddVase(int vase, int block, int craftingStation = TileID.Sawmill) {
             if (craftingStation == -1)
                 craftingStation = TileID.Sawmill;
 
-            Recipe
+            Recipe recipe = Recipe
                 .Create(vase)
                 .AddIngredient(block, 9)
                 .AddTile(craftingStation)
                 .Register();
+
+            return recipe;
         }
     }
 }
