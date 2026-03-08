@@ -15,9 +15,13 @@ namespace DuckLib {
             return dust.Type;
         }
 
-        public static SoundStyle CreateSound(this ModType type, string soundName) {
+        public static SoundStyle CreateSound(this ModType type, string soundName, int variationsCount = -1) {
             string soundPath = $"{type.Mod.Name}/Assets/Sound/{type.Name}/{soundName}";
-            SoundStyle style = new(soundPath);
+            SoundStyle style;
+            if (variationsCount != -1)
+                style = new(soundPath + '_', variationsCount);
+            else
+                style = new(soundPath);
             return style;
         }
 

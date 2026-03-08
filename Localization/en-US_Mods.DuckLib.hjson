@@ -1,4 +1,7 @@
 Conditions: {
 	SlimeRain: Slime rain is happening
 	NotSlimeRain: Slime rain is not happening
+	NoDungeon: World don't have dungeon
+	NoTemple: World don't have temple
+	NoDemonAltars: World don't have demon altars
 }
