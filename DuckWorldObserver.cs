@@ -17,6 +17,22 @@ namespace DuckLib {
         public static ElementObserver CrimsonObserver { get; private set; }
         public static ElementObserver CorruptionObserver { get; private set; }
 
+        public static ElementObserver OppositeEvilObserver {
+            get {
+                if (WorldGen.crimson)
+                    return CorruptionObserver;
+                return CrimsonObserver;
+            }
+        }
+
+        public static ElementObserver CorrespondingEvilObserver {
+            get {
+                if (WorldGen.crimson)
+                    return CrimsonObserver;
+                return CorruptionObserver;
+            }
+        }
+
         private static readonly List<ElementObserver> _observers = [];
 
         public override void Load() {
@@ -116,6 +132,7 @@ namespace DuckLib {
         public bool HaveInWorld {
             get {
                 DuckWorldObserver.ResetObservers();
+
                 if (Items.IsObservingAnything())
                     DuckWorldObserver.ScanItems();
 
