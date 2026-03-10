@@ -1,1 +1,11 @@
-Modify this file with a description of your mod.
+This mod is a library of code for all my other mods. It contains:
+- Different utils for extra-specific things: slime body drops, extractinator, furniture crafting and shimmer
+- Extensions for mod types (modNPC, modPlayer, etc.)
+- System for observing dungeon, temple, demon altars and other things existence (conditions and drop conditions included)
+- Conveniet way to work with dungeon bricks and wall and define dungeon color in world
+- Various extra hooks
+- [SOON] Templates for fast creation of typical items groups (for example, template to create crate along with it Hardmode version and tiles)
+
+You can freely use this library for your mods
+Source code: https://github.com/Nytrock/DuckLib
+Documentation will be soon, I hope

@@ -1,0 +1,7 @@
+Conditions: {
+	SlimeRain: Дождь слизней идёт
+	NotSlimeRain: Дождь слизней не идёт
+	NoDungeon: В мире нет данжа
+	NoTemple: В мире нет храма джунглей
+	NoDemonAltars: В мире нет демонических алтарей
+}
