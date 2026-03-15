@@ -77,9 +77,9 @@ namespace DuckLib.Utils {
                 ILCursor c = new(il);
                 c.GotoNext(i => i.MatchLdarg1());
 
-                c.Emit(Mono.Cecil.Cil.OpCodes.Ldarg_1);
-                c.Emit(Mono.Cecil.Cil.OpCodes.Ldarg_2);
-                c.Emit(Mono.Cecil.Cil.OpCodes.Ldarg_3);
+                c.Emit(OpCodes.Ldarg_1);
+                c.Emit(OpCodes.Ldarg_2);
+                c.Emit(OpCodes.Ldarg_3);
                 c.EmitDelegate(GetSlimeBodyDropInfo);
             } catch {
                 MonoModHooks.DumpIL(ModContent.GetInstance<DuckLib>(), il);
