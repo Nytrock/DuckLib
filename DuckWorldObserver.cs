@@ -4,10 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace DuckLib {
-    // </summary>
-    // Use it as little as possible, because every HaveInWorld call scans entire world or all items in world
-    // When using in if-else constructions, put it as last condition (yes, this will make difference)
-    // <summary>
     public class DuckWorldObserver : ModSystem {
         public static ElementObserver DemonAltarsObserver { get; private set; }
         public static ElementObserver DungeonObserver { get; private set; }
@@ -35,8 +31,27 @@ namespace DuckLib {
 
         private static readonly List<ElementObserver> _observers = [];
 
+        private const int SCAN_INTERVAL = 60 * 60 * 10;
+        private static int _timeFromLastScan = 0;
+
         public override void Load() {
             SetupObservers();
+        }
+
+        public override void OnWorldLoad() {
+            ScanEverything();
+        }
+
+        public override void PostUpdateTime() {
+            _timeFromLastScan++;
+            if (_timeFromLastScan >= SCAN_INTERVAL)
+                ScanEverything();
+        }
+
+        private static void ScanEverything() {
+            ScanWorld();
+            ScanItems();
+            _timeFromLastScan = 0;
         }
 
         internal static void ResetObservers() {
@@ -116,11 +131,6 @@ namespace DuckLib {
             for (int i = 0; i < containers.Length; i++)
                 for (int j = 0; j < containers[i].Length; j++)
                     CheckItem(containers[i][j]);
-
-            foreach (Chest chest in Main.chest)
-                if (chest != null)
-                    foreach (Item item in chest.item)
-                        CheckItem(item);
         }
     }
 
@@ -131,14 +141,6 @@ namespace DuckLib {
 
         public bool HaveInWorld {
             get {
-                DuckWorldObserver.ResetObservers();
-
-                if (Items.IsObservingAnything())
-                    DuckWorldObserver.ScanItems();
-
-                if (Tiles.IsObservingAnything() || Walls.IsObservingAnything())
-                    DuckWorldObserver.ScanWorld();
-
                 return Items.HaveInWorld || Walls.HaveInWorld || Tiles.HaveInWorld;
             }
         }

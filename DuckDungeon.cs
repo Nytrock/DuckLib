@@ -56,6 +56,11 @@ namespace DuckLib {
             }
         }
 
+        public override void PostWorldLoad() {
+            if (_dungeonBrickColorInWorld == DungeonBrickColor.None)
+                GetDungeonColorFromWorld();
+        }
+
         public override void LoadWorldData(TagCompound tag) {
             int? dungeonColor = tag.GetInt(DUNGEON_KEY);
             if (dungeonColor == 0)
