@@ -49,6 +49,7 @@ namespace DuckLib {
         }
 
         private static void ScanEverything() {
+            ResetObservers();
             ScanWorld();
             ScanItems();
             _timeFromLastScan = 0;
@@ -139,11 +140,10 @@ namespace DuckLib {
         public ElementObserverCounter Walls { get; private set; }
         public ElementObserverCounter Tiles { get; private set; }
 
-        public bool HaveInWorld {
-            get {
-                return Items.HaveInWorld || Walls.HaveInWorld || Tiles.HaveInWorld;
-            }
-        }
+        private bool _disabled;
+
+        public bool NoInWorld => (!Items.HaveInWorld && !Walls.HaveInWorld && !Tiles.HaveInWorld) && !_disabled;
+        public bool HaveInWorld => (Items.HaveInWorld || Walls.HaveInWorld || Tiles.HaveInWorld) && !_disabled;
 
         public ElementObserver() {
             Items = new();
@@ -152,9 +152,14 @@ namespace DuckLib {
         }
 
         internal void Reset() {
+            _disabled = false;
             Items.Reset();
             Walls.Reset();
             Tiles.Reset();
+        }
+
+        public void Disable() {
+            _disabled = true;
         }
     }
 
