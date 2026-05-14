@@ -5,6 +5,10 @@ using Terraria;
 
 namespace DuckLib.Extensions {
     public static class ItemExtension {
+        public static bool IsType(this int type, params int[] types) {
+            return types.Contains(type);
+        }
+
         public static bool IsType(this Item item, params int[] types) {
             return types.Contains(item.type);
         }
