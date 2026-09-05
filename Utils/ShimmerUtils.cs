@@ -9,11 +9,22 @@ using Terraria.ModLoader;
 namespace DuckLib.Utils {
     public class ShimmerUtils : ModSystem {
         private static int[] TransformsList => ItemID.Sets.ShimmerTransformToItem;
+
+        private static Dictionary<int, int> _preSetupTransforms = [];
         private static readonly List<ShimmerWithCondition<int>> _transformsWithConditions = [];
         private static readonly List<ShimmerWithCondition<Action>> _actionsWithConditions = [];
 
+        public override void PostSetupContent() {
+            foreach (var transform in _preSetupTransforms)
+                TransformsList[transform.Key] = transform.Value;
+            _preSetupTransforms = [];
+        }
+
         public static void Add(int ingredient, int result) {
-            TransformsList[ingredient] = result;
+            if (TransformsList.Length <= ingredient)
+                _preSetupTransforms.Add(ingredient, result);
+            else
+                TransformsList[ingredient] = result;
         }
 
         public static int Get(int ingredient) {
@@ -46,8 +57,8 @@ namespace DuckLib.Utils {
 
         public static void AddLoop(params int[] items) {
             for (int i = 1; i < items.Length; i++)
-                TransformsList[items[i - 1]] = items[i];
-            TransformsList[items[^1]] = items[0];
+                Add(items[i - 1], items[i]);
+            Add(items[^1], items[0]);
         }
 
         public static void AddLoopWithConditions(int[] items, params Condition[] conditions) {

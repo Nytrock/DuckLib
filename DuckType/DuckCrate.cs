@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace DuckLib.DuckType {
     internal class DuckCrate(DuckCrateTile tile, Func<IItemDropRule[]> itemLootAction, bool addStandardLoot) : ModItem {
-        public override string Name => tile.CrateName + "Crate" + TextUtils.HardmodeText(tile.IsHardmode);
+        public override string Name => tile.Name;
         public override string Texture => $"{Mod.Name}/Assets/Crate/{tile.CrateName}/Item" + TextUtils.HardmodeText(tile.IsHardmode);
         protected override bool CloneNewInstances => true;
 
@@ -30,6 +30,13 @@ namespace DuckLib.DuckType {
         }
 
         public override void ModifyItemLoot(ItemLoot itemLoot) {
+            IItemDropRule[] extraRules = itemLootAction.Invoke();
+            if (!addStandardLoot) {
+                if (extraRules != null)
+                    itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(extraRules));
+                return;
+            }
+
             if (tile.IsHardmode)
                 AddHardmodeCrateLoot(itemLoot, itemLootAction.Invoke());
             else
@@ -40,13 +47,7 @@ namespace DuckLib.DuckType {
             return true;
         }
 
-        public void AddPreHardmodeCrateLoot(ItemLoot itemLoot, params IItemDropRule[] extraRules) {
-            if (!addStandardLoot) {
-                if (extraRules != null)
-                    itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(extraRules));
-                return;
-            }
-
+        private static void AddPreHardmodeCrateLoot(ItemLoot itemLoot, params IItemDropRule[] extraRules) {
             AddPotionsAndBaitToLoot(itemLoot);
             IItemDropRule coinsRule = ItemDropRule.NotScalingWithLuck(ItemID.GoldCoin, 4, 5, 12);
 
@@ -86,13 +87,7 @@ namespace DuckLib.DuckType {
             itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(lootDropRules));
         }
 
-        public void AddHardmodeCrateLoot(ItemLoot itemLoot, params IItemDropRule[] extraRules) {
-            if (!addStandardLoot) {
-                if (extraRules != null)
-                    itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(extraRules));
-                return;
-            }
-
+        private static void AddHardmodeCrateLoot(ItemLoot itemLoot, params IItemDropRule[] extraRules) {
             AddPotionsAndBaitToLoot(itemLoot);
 
             IItemDropRule coinsRule = ItemDropRule.NotScalingWithLuck(ItemID.GoldCoin, 4, 5, 12);

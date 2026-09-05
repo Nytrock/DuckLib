@@ -1,29 +1,34 @@
 ﻿using DuckLib.DuckType;
+using DuckLib.Utils;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader;
 
 namespace DuckLib.Templates {
     public abstract class CrateTemplate : BaseTemplate {
         protected virtual bool HaveStandardLoot => true;
 
-        public static int CrateType { get; private set; }
-        public static int CrateTypeHardmode { get; private set; }
-        public static int CurrentCrateType => Main.hardMode ? CrateTypeHardmode : CrateType;
+        public int CrateType { get; private set; }
+        public int CrateTypeHardmode { get; private set; }
+        public int CurrentCrateType => Main.hardMode ? CrateTypeHardmode : CrateType;
 
-        public override void Load(Mod mod) {
-            DuckCrateTile crateTile = new(Name, false);
+        protected override void AddContent() {
+            DuckCrateTile crateTile = new(TemplateName, false);
             DuckCrate crate = new(crateTile, AddNonStandardLoot, HaveStandardLoot);
-            DuckCrateTile crateTileHardmode = new(Name, true);
+            DuckCrateTile crateTileHardmode = new(TemplateName, true);
             DuckCrate crateHardmode = new(crateTileHardmode, AddNonStandardLoot, HaveStandardLoot);
 
-            mod.AddContent(crateTile);
-            mod.AddContent(crate);
-            mod.AddContent(crateTileHardmode);
-            mod.AddContent(crateHardmode);
+            Mod.AddContent(crateTile);
+            Mod.AddContent(crate);
+            Mod.AddContent(crateTileHardmode);
+            Mod.AddContent(crateHardmode);
 
             CrateType = crate.Type;
             CrateTypeHardmode = crateHardmode.Type;
+            ShimmerUtils.Add(CrateTypeHardmode, CrateType);
+        }
+
+        public bool IsCrate(int type) {
+            return type == CrateType || type == CrateTypeHardmode;
         }
 
         public virtual IItemDropRule[] AddNonStandardLoot() {

@@ -1,11 +1,12 @@
 ﻿using Terraria.ModLoader;
 
 namespace DuckLib.Templates {
-    public abstract class BaseTemplate : ILoadable {
-        protected abstract string Name { get; }
+    public abstract class BaseTemplate : ModSystem {
+        protected abstract string TemplateName { get; }
+        protected abstract void AddContent();
 
-        public abstract void Load(Mod mod);
-
-        public void Unload() { }
+        public override void Load() {
+            AddContent();
+        }
     }
 }
